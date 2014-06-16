@@ -3,43 +3,75 @@
 namespace Acme\KataBundle\Tests\Unit\Form\DataTransformer;
 
 use Acme\KataBundle\Form\DataTransformer\TagModelTransformer;
-use Acme\KataBundle\Form\DataTransformer\TagViewTransformer;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Process\Process;
 
-class TagModelTransformerTest extends WebTestCase
+class TagModelTransformerTest extends \PHPUnit_Framework_TestCase
 {
-    private $client;
+    private $repo;
+    private $transformer;
 
-    public function setUp()
+    protected function setUp()
     {
-        $this->client = static::createClient();
-
-        $process = new Process('php app/console doctrine:fixture:load --env=test');
-        $process->run();
+        $this->repo = $this->getMockBuilder('Acme\KataBundle\Entity\TagRepository')
+            ->disableOriginalConstructor()
+            ->setMethods(array('findByTitle', 'persistAndFlush'))
+            ->getMock();
+        ;
+        $this->transformer =new TagModelTransformer($this->repo);
     }
 
-    public function testModelReverseTransform()
+    public function testReverseTransformWithEmptyTitle()
     {
-        /** @var EntityManager $em */
-        $em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-        $dataTransformer = new TagModelTransformer($em);
-
-        $result = $dataTransformer->reverseTransform(array());
+        $this->repo
+            ->expects($this->once())
+            ->method('findByTitle')
+            ->with(array())
+            ->will($this->returnValue(array()))
+        ;
+        $result = $this->transformer->reverseTransform(array());
         $this->assertEquals(array(), $result);
+    }
+
+    public function testReverseTransformWithUnExistingTag()
+    {
+        $this->repo
+            ->expects($this->exactly(2))
+            ->method('persistAndFlush')
+        ;
+
+        $this->repo
+            ->expects($this->once())
+            ->method('findByTitle')
+            ->with(array('pomme', 'cerise'))
+            ->will($this->returnValue(array()))
+        ;
+
+        $results = $this->transformer->reverseTransform(array('pomme', 'cerise'));
+        $this->assertCount(2, $results);
+        $this->assertInstanceOf('Acme\KataBundle\Entity\Tag', $results[0]);
+        $this->assertSame('pomme', $results[0]->getTitle());
+        $this->assertInstanceOf('Acme\KataBundle\Entity\Tag', $results[1]);
+        $this->assertSame('cerise', $results[1]->getTitle());
+    }
+
+    public function taestReverseTransformWithExistingTag()
+    {
+        $this->repo
+            ->expects($this->never())
+            ->method('persistAndFlush')
+        ;
+
+        $this->repo
+            ->expects($this->once())
+            ->method('findByTitle')
+            ->with(array('pomme', 'cerise'))
+            ->will($this->returnValue(array(new Tag('pomme'), new Tag('cerise'))))
+        ;
 
         $results = $dataTransformer->reverseTransform(array('pomme', 'cerise'));
         $this->assertCount(2, $results);
-        $this->assertSame('Acme\KataBundle\Entity\Tag', get_class($results[0]));
+        $this->assertInstanceOf('Acme\KataBundle\Entity\Tag', $results[0]);
         $this->assertSame('pomme', $results[0]->getTitle());
+        $this->assertInstanceOf('Acme\KataBundle\Entity\Tag', $results[1]);
         $this->assertSame('cerise', $results[1]->getTitle());
-
-        $results = $dataTransformer->reverseTransform(array('chocolat', 'pomme', 'cerise'));
-        $this->assertCount(3, $results);
-        $this->assertSame('Acme\KataBundle\Entity\Tag', get_class($results[0]));
-        $this->assertSame('chocolat', $results[0]->getTitle());
-        $this->assertSame('pomme', $results[1]->getTitle());
-        $this->assertSame('cerise', $results[2]->getTitle());
     }
 }

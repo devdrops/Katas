@@ -2,24 +2,18 @@
 
 namespace Acme\KataBundle\Form\DataTransformer;
 
+use Acme\KataBundle\Entity\Tag;
+use Acme\KataBundle\Entity\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Acme\KataBundle\Entity\Tag;
 
 class TagModelTransformer implements DataTransformerInterface
 {
-    /**
-     * @var ObjectManager
-     */
-    private $om;
+    private $tagRepository;
 
-    /**
-     * @param ObjectManager $om
-     */
-    public function __construct(ObjectManager $om)
+    public function __construct(TagRepository $tagRepository)
     {
-        $this->om = $om;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -47,21 +41,16 @@ class TagModelTransformer implements DataTransformerInterface
      */
     public function reverseTransform($titles)
     {
-        $existingTitles = $this->om
-            ->getRepository('AcmeKataBundle:Tag')
-            ->findByTitle($titles)
-        ;
+        $existingTitles = $this->tagRepository->findByTitle($titles);
 
         foreach ($titles as $title) {
             if (!in_array($title, $existingTitles)) {
                 $tag = new Tag();
                 $tag->setTitle($title);
-                $this->om->persist($tag);
+                $this->tagRepository->persistAndFlush($tag);
                 $existingTitles[] = $tag;
             }
         }
-
-        $this->om->flush();
 
         return $existingTitles;
     }
