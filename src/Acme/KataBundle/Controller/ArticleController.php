@@ -27,14 +27,13 @@ class ArticleController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AcmeKataBundle:Article')->findAll();
+        $entities = $this->get('doctrine')->getRepository('AcmeKataBundle:Article')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Article entity.
      *
@@ -44,41 +43,22 @@ class ArticleController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Article();
-        $form = $this->createCreateForm($entity);
+        $article = new Article();
+        $form = $this->createCreateForm($article);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($article);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('article_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('article_show', array('id' => $article->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $article,
             'form'   => $form->createView(),
         );
-    }
-
-    /**
-    * Creates a form to create a Article entity.
-    *
-    * @param Article $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Article $entity)
-    {
-        $form = $this->createForm('article', $entity, array(
-            'action' => $this->generateUrl('article_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
 
     /**
@@ -90,11 +70,11 @@ class ArticleController extends Controller
      */
     public function newAction()
     {
-        $entity = new Article();
-        $form   = $this->createCreateForm($entity);
+        $article = new Article();
+        $form   = $this->createCreateForm($article);
 
         return array(
-            'entity' => $entity,
+            'entity' => $article,
             'form'   => $form->createView(),
         );
     }
@@ -106,20 +86,12 @@ class ArticleController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Article $article)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AcmeKataBundle:Article')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Article entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($article);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $article,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -131,44 +103,18 @@ class ArticleController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Article $article)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AcmeKataBundle:Article')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Article entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($article);
+        $deleteForm = $this->createDeleteForm($article);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $article,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
-    /**
-    * Creates a form to edit a Article entity.
-    *
-    * @param Article $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Article $entity)
-    {
-        $form = $this->createForm('article', $entity, array(
-            'action' => $this->generateUrl('article_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
     /**
      * Edits an existing Article entity.
      *
@@ -176,52 +122,41 @@ class ArticleController extends Controller
      * @Method("PUT")
      * @Template("AcmeKataBundle:Article:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Article $article)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AcmeKataBundle:Article')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Article entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($article);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('article_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('article_edit', array('id' => $article->getId())));
         }
 
+        $deleteForm = $this->createDeleteForm($article);
+
         return array(
-            'entity'      => $entity,
+            'entity'      => $article,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Article entity.
      *
      * @Route("/{id}", name="article_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Article $article)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $form = $this->createDeleteForm($article);
 
-        if ($form->isValid()) {
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AcmeKataBundle:Article')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Article entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($article);
             $em->flush();
         }
 
@@ -235,13 +170,51 @@ class ArticleController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Article $article)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('article_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('article_delete', array('id' => $article->getId())))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * Creates a form to edit a Article entity.
+     *
+     * @param Article $article The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Article $article)
+    {
+        $form = $this->createForm('article', $article, array(
+            'action' => $this->generateUrl('article_update', array('id' => $article->getId())),
+            'method' => 'PUT',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Update'));
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to create a Article entity.
+     *
+     * @param Article $article The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Article $article)
+    {
+        $form = $this->createForm('article', $article, array(
+            'action' => $this->generateUrl('article_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return $form;
     }
 }

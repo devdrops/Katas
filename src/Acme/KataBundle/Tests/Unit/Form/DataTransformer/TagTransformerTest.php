@@ -19,7 +19,7 @@ class TagTransformerTest extends WebTestCase
     {
         $this->client = static::createClient();
 
-        $process = new Process('php app/console d:f:l --env=test');
+        $process = new Process('php app/console doctrine:fixture:load --env=test');
         $process->run();
     }
 
