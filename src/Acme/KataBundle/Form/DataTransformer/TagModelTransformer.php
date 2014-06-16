@@ -4,7 +4,6 @@ namespace Acme\KataBundle\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Persistence\ObjectManager;
 use Acme\KataBundle\Entity\Tag;
 
@@ -43,7 +42,7 @@ class TagModelTransformer implements DataTransformerInterface
     /**
      * Transforms an array to object(s) (tag).
      *
-     * @param array $titles
+     * @param  array           $titles
      * @return ArrayCollection
      */
     public function reverseTransform($titles)

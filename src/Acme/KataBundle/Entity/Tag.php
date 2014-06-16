@@ -30,7 +30,7 @@ class Tag
      */
     private $title;
 
-    function __construct($title = null)
+    public function __construct($title = null)
     {
         if (null !== $title) {
             $this->title = $title;
@@ -45,7 +45,7 @@ class Tag
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -55,7 +55,7 @@ class Tag
     /**
      * Set title
      *
-     * @param string $title
+     * @param  string $title
      * @return Tag
      */
     public function setTitle($title)
@@ -68,7 +68,7 @@ class Tag
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {

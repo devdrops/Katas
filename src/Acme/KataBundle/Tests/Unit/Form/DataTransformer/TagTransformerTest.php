@@ -3,10 +3,7 @@
 namespace Acme\KataBundle\Tests\Unit\Form\DataTransformer;
 
 use Acme\KataBundle\Form\DataTransformer\TagModelTransformer;
-use Acme\KataBundle\Form\DataTransformer\TagTransformer;
 use Acme\KataBundle\Form\DataTransformer\TagViewTransformer;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Process\Process;

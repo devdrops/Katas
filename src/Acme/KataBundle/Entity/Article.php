@@ -64,7 +64,7 @@ class Article
      */
     private $tags;
 
-    function __construct()
+    public function __construct()
     {
         $this->createdAt = new \DateTime();
     }
@@ -72,7 +72,7 @@ class Article
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -82,7 +82,7 @@ class Article
     /**
      * Set title
      *
-     * @param string $title
+     * @param  string  $title
      * @return Article
      */
     public function setTitle($title)
@@ -95,7 +95,7 @@ class Article
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -105,7 +105,7 @@ class Article
     /**
      * Set author
      *
-     * @param string $author
+     * @param  string  $author
      * @return Article
      */
     public function setAuthor($author)
@@ -118,7 +118,7 @@ class Article
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
@@ -128,7 +128,7 @@ class Article
     /**
      * Set content
      *
-     * @param string $content
+     * @param  string  $content
      * @return Article
      */
     public function setContent($content)
@@ -141,7 +141,7 @@ class Article
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -151,7 +151,7 @@ class Article
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Article
      */
     public function setCreatedAt($createdAt)
@@ -164,7 +164,7 @@ class Article
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -174,7 +174,7 @@ class Article
     /**
      * Add tags
      *
-     * @param \Acme\KataBundle\Entity\Tag $tags
+     * @param  \Acme\KataBundle\Entity\Tag $tags
      * @return Article
      */
     public function addTag(Tag $tags)
@@ -197,7 +197,7 @@ class Article
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
