@@ -2,11 +2,7 @@
 
 namespace Acme\KataBundle\Tests\Unit\Form\DataTransformer;
 
-use Acme\KataBundle\Form\DataTransformer\TagModelTransformer;
 use Acme\KataBundle\Form\DataTransformer\TagViewTransformer;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Process\Process;
 
 class TagViewTransformerTest extends \PHPUnit_Framework_TestCase
 {

@@ -6,7 +6,6 @@ use Acme\KataBundle\Form\DataTransformer\TagModelTransformer;
 use Acme\KataBundle\Form\DataTransformer\TagViewTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TagType extends AbstractType
