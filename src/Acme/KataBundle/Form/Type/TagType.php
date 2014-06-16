@@ -11,18 +11,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TagType extends AbstractType
 {
-    private $tagRepository;
+    private $tagModelTransformer;
+    private $tagViewTransformer;
 
-    public function __construct($tagRepository)
+    public function __construct(TagModelTransformer $tagModelTransformer, TagViewTransformer $tagViewTransformer)
     {
-        $this->tagRepository = $tagRepository;
+        $this->tagModelTransformer = $tagModelTransformer;
+        $this->tagViewTransformer = $tagViewTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $viewTransformer = new TagViewTransformer();
-        $modelTransformer = new TagModelTransformer($this->tagRepository);
-        $builder->addViewTransformer($viewTransformer)->addModelTransformer($modelTransformer);
+        $builder
+            ->addModelTransformer($this->tagModelTransformer)
+            ->addViewTransformer($this->tagViewTransformer)
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -5,12 +5,23 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <!-- Type -->
+
         <service id="acme.form.type.article" class="Acme\KataBundle\Form\Type\ArticleType">
             <tag name="form.type" alias="article" />
         </service>
         <service id="acme.form.type.tag_selector" class="Acme\KataBundle\Form\Type\TagType">
-            <argument type="service" id="acme.repository.tag"/>
+            <argument type="service" id="acme.form.dt.model.tag"/>
+            <argument type="service" id="acme.form.dt.view.tag"/>
             <tag name="form.type" alias="tag_selector" />
+        </service>
+
+        <!-- DT -->
+
+        <service id="acme.form.dt.model.tag" class="Acme\KataBundle\Form\DataTransformer\TagModelTransformer" public="false">
+            <argument type="service" id="acme.repository.tag"/>
+        </service>
+        <service id="acme.form.dt.view.tag" class="Acme\KataBundle\Form\DataTransformer\TagViewTransformer" public="false">
         </service>
     </services>
 </container>
