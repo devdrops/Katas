@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Process\Process;
 
-class TagTransformerTest extends WebTestCase
+class TagModelTransformerTest extends WebTestCase
 {
     private $client;
 
@@ -18,25 +18,6 @@ class TagTransformerTest extends WebTestCase
 
         $process = new Process('php app/console doctrine:fixture:load --env=test');
         $process->run();
-    }
-
-    public function testViewTransform()
-    {
-        $dataTransformer = new TagViewTransformer();
-
-        $result = $dataTransformer->transform(array());
-        $this->assertSame('', $result);
-
-        $result = $dataTransformer->transform(array('chocolat', 'coca', 'nature', 'meteo'));
-        $this->assertSame('chocolat coca nature meteo', $result);
-    }
-
-    public function testViewReverseTransform()
-    {
-        $dataTransformer = new TagViewTransformer();
-
-        $result = $dataTransformer->reverseTransform('salut tu vas bien ?');
-        $this->assertEquals(array('salut', 'tu', 'vas', 'bien', '?'), $result);
     }
 
     public function testModelReverseTransform()
