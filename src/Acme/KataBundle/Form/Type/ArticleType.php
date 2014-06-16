@@ -22,9 +22,6 @@ class ArticleType extends AbstractType
         ;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'article';
