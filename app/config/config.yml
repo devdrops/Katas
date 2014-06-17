@@ -67,3 +67,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+
+playground_demo:
+    open_day: 0  #sunday
+    close_day: 5 #friday

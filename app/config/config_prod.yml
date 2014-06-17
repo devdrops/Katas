@@ -1,9 +1,13 @@
 imports:
     - { resource: config.yml }
 
-#framework:
+framework:
 #    validation:
 #        cache: apc
+    session:
+        save_path: %kernel.root_dir%/path/to/memcache/server/sessions
+        name: acme_app
+        cookie_lifetime: 2520 # 42 minutes in seconds
 
 #doctrine:
 #    orm:

@@ -1,0 +1,5 @@
+playground_demo:
+    resource: "@PlaygroundDemoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
