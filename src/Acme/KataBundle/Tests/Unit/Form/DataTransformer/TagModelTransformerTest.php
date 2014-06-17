@@ -14,7 +14,7 @@ class TagModelTransformerTest extends \PHPUnit_Framework_TestCase
         $this->repo = $this->getMockBuilder('Acme\KataBundle\Entity\TagRepository')
             ->disableOriginalConstructor()
             ->setMethods(array('findByTitle', 'persistAndFlush'))
-            ->getMock();
+            ->getMock()
         ;
         $this->transformer =new TagModelTransformer($this->repo);
     }
@@ -73,5 +73,11 @@ class TagModelTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('pomme', $results[0]->getTitle());
         $this->assertInstanceOf('Acme\KataBundle\Entity\Tag', $results[1]);
         $this->assertSame('cerise', $results[1]->getTitle());
+    }
+
+    protected function tearDown()
+    {
+        $this->repo = null;
+        $this->transformer = null;
     }
 }
