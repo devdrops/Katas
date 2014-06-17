@@ -2,7 +2,6 @@
 
 namespace  Acme\KataBundle\Form\Type;
 
-use Acme\KataBundle\Form\DataTransformer\TagTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -23,9 +22,6 @@ class ArticleType extends AbstractType
         ;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'article';

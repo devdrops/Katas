@@ -9,9 +9,6 @@ use Acme\KataBundle\Entity\Tag;
 
 class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ObjectManager $manager)
     {
         $tags = array('chocolat', 'coca', 'nature', 'meteo');
@@ -23,11 +20,6 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
     }
 
-    /**
-     * Get the order of this fixture
-     *
-     * @return integer
-     */
     public function getOrder()
     {
         return 2;

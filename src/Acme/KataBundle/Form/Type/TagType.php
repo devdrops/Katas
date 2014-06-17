@@ -6,29 +6,25 @@ use Acme\KataBundle\Form\DataTransformer\TagModelTransformer;
 use Acme\KataBundle\Form\DataTransformer\TagViewTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TagType extends AbstractType
 {
-    /**
-     * @var ObjectManager
-     */
-    private $om;
+    private $tagModelTransformer;
+    private $tagViewTransformer;
 
-    /**
-     * @param ObjectManager $om
-     */
-    public function __construct(ObjectManager $om)
+    public function __construct(TagModelTransformer $tagModelTransformer, TagViewTransformer $tagViewTransformer)
     {
-        $this->om = $om;
+        $this->tagModelTransformer = $tagModelTransformer;
+        $this->tagViewTransformer = $tagViewTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $viewTransformer = new TagViewTransformer();
-        $modelTransformer = new TagModelTransformer($this->om);
-        $builder->addViewTransformer($viewTransformer)->addModelTransformer($modelTransformer);
+        $builder
+            ->addModelTransformer($this->tagModelTransformer)
+            ->addViewTransformer($this->tagViewTransformer)
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
