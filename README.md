@@ -1,18 +1,30 @@
-SensioLabs PoleDev Katas
-========================
+Kata Form Inherit Data
+======================
 
-Here is some exercises around the Symfony2 framework! Once a day, a new Kata to train yourself :)
+#### As a user, I need to add an user with an address like an article.
 
-Navigate among branches of the repository to find hapiness.
+```
+[x] Add fields of an address into Article form.
+[x] Add fields of an address into User form.
+[x] Don't repeat the form address, but don't use another entity with any relation.
+```
 
-Basically, it's about following each step described in the README file, then repeat it until you 
-can code the exercise really quickly. It's about getting reflexes and learn some pieces of knowledge,
-exercise by exercise.
+### Steps :
 
-Here is a Symfony Standard edition (2.4) to begin with.
+1. Create another entity User with a username and mail. Who don't have any relationShip.
+2. Create a basic FormType for an User with username and mail fields.
+3. Set as a service.
+4. Add address fields to User and Article entity(address, zipcode, city, country).
+5. Create another FormType like `LocationType` to represent the address fields. (address, zipcode, city, country).
+6. In `LocationType` override `setDefaultOption`, and set 'inherit_data' to true :
+`$resolver->setDefaults(array('inherit_data' => true));`
+7. Set as a service.
+8. Now you can add your `LocationType` in User and Article Form.
+Like `->add('location', 'location', array('data_class' => 'Acme\KataBundle\Entity\MyEntity'))`
+9. To display the form you can add an action in your controller.
 
-Enjoy!
+Et voilà!
 
-- Kata 1: (Form) DataTransformer https://github.com/poledev/Katas/tree/kata-data-transformers
-- Kata 2: (EventDispatcher) Event Listener / Event Dispatcher https://github.com/poledev/Katas/tree/kata-event-listener
+Some documentation:
 
+- http://symfony.com/doc/current/cookbook/form/inherit_data_option.html

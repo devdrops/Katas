@@ -1,0 +1,5 @@
+acme_kata:
+    resource: "@AcmeKataBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

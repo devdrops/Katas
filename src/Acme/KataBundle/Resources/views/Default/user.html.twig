@@ -1,0 +1,11 @@
+{% extends 'AcmeDemoBundle::layout.html.twig' %}
+
+{% form_theme form 'form_table_layout.html.twig' %}
+
+{% block content %}
+    {{ form_start(form) }}
+
+    {{ form_row(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}
