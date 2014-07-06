@@ -1,0 +1,5 @@
+vendor_shop:
+    resource: "@VendorShopBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

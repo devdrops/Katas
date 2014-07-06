@@ -1,0 +1,10 @@
+{% block form_row %}
+{% spaceless %}
+    <fieldset>
+        <legend>{{ form_label(form) }}</legend>
+            {{ form_errors(form) }}
+
+            {{ form_widget(form) }}
+    </fieldset>
+{% endspaceless %}
+{% endblock form_row %}

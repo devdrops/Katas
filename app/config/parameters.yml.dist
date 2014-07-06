@@ -12,8 +12,10 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret: myS3cr3t
 
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    upload_path: /uploads/

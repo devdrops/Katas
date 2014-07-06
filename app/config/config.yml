@@ -67,3 +67,6 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+vendor_shop:
+    upload_path: "%upload_path%"
