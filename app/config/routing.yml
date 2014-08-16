@@ -1,0 +1,12 @@
+vendor_shop:
+    resource: "@VendorShopBundle/Controller/"
+    type: annotation
+    prefix: /{_locale}
+    requirements:
+        _locale:  en|fr
+    defaults:
+        _locale: en
+
+lexik_translation_edition:
+    resource: "@LexikTranslationBundle/Resources/config/routing.yml"
+    prefix:   /translations

@@ -1,0 +1,15 @@
+{% extends "VendorShopBundle::layout.html.twig" %}
+
+{% trans_default_domain 'index' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block header %}
+    <div class="jumbotron">
+        <h1>{{ 'index.title'|trans }}</h1>
+        <p>{{ 'index.header.content'|trans }}</p>
+        <p>
+            <a class="btn btn-lg btn-primary" href="{{ path('vendor_get_products', {_locale : app.session.get('_locale')}) }}" role="button">{{ 'index.header.button'|trans }}</a>
+        </p>
+    </div>
+{% endblock header %}

@@ -1,0 +1,8 @@
+product:
+    title: Product list
+    header:
+        content: This an example of how you can setup a website with some translations.
+        button: Go back to the homepage!
+    table:
+        name: Product name
+        description: Description

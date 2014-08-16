@@ -1,0 +1,36 @@
+{% extends "VendorShopBundle::layout.html.twig" %}
+
+{% trans_default_domain 'product' %}
+
+{% block title %}{{ 'product.title'|trans }}{% endblock %}
+
+{% block header %}
+    <div class="jumbotron">
+        <h1>{{ 'product.title'|trans }}</h1>
+        <p>{{ 'product.header.content'|trans }}</p>
+        <p>
+            <a class="btn btn-lg btn-primary" href="{{ path('vendor_index', {_locale : app.session.get('_locale')}) }}" role="button">{{ 'product.header.button'|trans }}</a>
+        </p>
+    </div>
+{% endblock header %}
+
+{% block content %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ 'product.table.name'|trans }}</th>
+                <th>{{ 'product.table.description'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

@@ -1,0 +1,8 @@
+product:
+    title: Liste de produits
+    header:
+        content: Ceci est un exemple pour mettre en place de la traduction sur votre site.
+        button: Retourner à la page d'accueil !
+    table:
+        name: Nom du produit
+        description: Description

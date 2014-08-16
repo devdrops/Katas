@@ -1,0 +1,59 @@
+{% trans_default_domain 'global' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+
+        <meta name="robots" content="index, follow, all" />
+        <meta name="keywords" content="{{ 'meta.keywords'|trans }}"/>
+        <meta name="description" content="{{ 'meta.description'|trans }}"/>
+        <meta name="author" content="SensioLabs" />
+
+        <title>{{ 'shop.name'|trans }} - {% block title %}{% endblock %}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body data-locale="{{ app.request.locale }}">
+         <div class="container">
+
+        {% block menu %}
+            <!-- Static navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{{ path('vendor_index') }}">{{ 'shop.name'|trans }}</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="flag_icon">
+                            {% if app.session.get('other_locales') %}
+                                {% for locale in app.session.get('other_locales') %}
+                                <a href="{{ path('vendor_locale', {_locale: locale, referer: app.request.attributes.get('_route')}) }}" class="locale_button">
+                                    <img height="25" src="{{ asset('bundles/vendorshop/images/pictos/flag_icon_' ~ locale ~ '.png') }}" alt="{{ locale }} version" />
+                                </a>
+                                {% endfor %}
+                            {% endif %}
+                            </li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </div>
+        {% endblock menu %}
+
+        {% block header '' %}
+
+        {% block content '' %}
+        </div>
+
+        {% block javascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        {% endblock javascripts %}
+    </body>
+</html>
