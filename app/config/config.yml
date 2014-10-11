@@ -67,3 +67,23 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     'localhost'
+            port:     5672
+            user:     'guest'
+            password: 'guest'
+            vhost:    '/'
+            lazy:     false
+    producers:
+        poledev_mailer:
+            connection:             default
+            exchange_options:       { name: 'poledev_mailer_exchange', type: direct }
+    consumers:
+        poledev_mailer:
+            connection:             default
+            exchange_options:       { name: 'poledev_mailer_exchange', type: direct }
+            queue_options:          { name: 'poledev_mailer_exchange' }
+            callback:               poledev.mailer_consumer
