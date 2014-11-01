@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Vendor\ShopBundle\Translation\TranslationProxy;
 
 /**
- * NotificationLink
+ * Product
  *
  * @ORM\Table("vendor_product")
  * @ORM\Entity()
@@ -26,7 +26,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="name")
+     * @ORM\Column()
      */
     private $name;
 
